@@ -1,0 +1,29 @@
+package View;
+
+import javax.swing.*;
+
+public class Display extends JFrame {
+	
+	private String title;
+	private int size;
+	private JFrame frame;
+	
+	public Display(String title, int size) {
+		super();
+		this.title = title;
+		this.size = size;
+		createDisplay();
+	}
+	
+	private void createDisplay() {
+		
+		frame = new JFrame(title);
+		frame.setSize(size, size);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		
+	}
+
+
+}

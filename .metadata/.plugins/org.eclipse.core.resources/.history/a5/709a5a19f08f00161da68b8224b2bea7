@@ -1,0 +1,21 @@
+package Controller;
+
+import javax.swing.Timer;
+import View.*;
+
+public class ClockController {
+	
+	static private ClockController clockController = new ClockController();
+	private Timer timer;
+	
+	private ClockController() { 
+		
+		timer = new Timer(1000, null);
+		
+	}
+	
+	static public ClockController getControllerSingleton() {
+		return clockController;
+	}
+
+}

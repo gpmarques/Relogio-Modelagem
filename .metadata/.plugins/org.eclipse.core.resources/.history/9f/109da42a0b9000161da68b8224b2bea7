@@ -1,0 +1,23 @@
+package Controller;
+
+import javax.swing.Timer;
+import View.*;
+
+public class ClockController {
+	
+	static private ClockController clockController = new ClockController();
+	private Timer timer;
+	private AnalogueClockView analogueClock;
+	
+	private ClockController() { 
+		
+		timer = new Timer(1000, null);
+		analogueClock = new AnalogueClockView("Relogio Analogico", 500);
+		
+	}
+	
+	static public ClockController getControllerSingleton() {
+		return clockController;
+	}
+
+}

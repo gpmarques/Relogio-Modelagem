@@ -1,0 +1,55 @@
+package View;
+
+import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+public class AnalogueClockPanel extends JPanel {
+	
+	private BufferedImage clockImage;
+	private int second;
+	private int minute;
+	private int hour;
+	private int centerX;
+	private int centerY;
+	private int size;
+	
+	public AnalogueClockPanel(int size) {
+		this.size = size;
+	}
+	
+	public void paintComponent(Graphics2D g) {
+		super.paintComponent(g);
+		
+        try {
+        	clockImage = ImageIO.read(new File("analogico.jpg"));
+        } catch(IOException e) {
+        	System.out.println(e.getMessage());
+        	System.exit(1);
+        }
+		
+        g.drawImage(clockImage, 0, 0, size, size, null);
+        
+	}
+	
+	
+	private void drawHands(Graphics2D g ) {
+		
+		double rsecond = (second*6)*(Math.PI)/180;
+		double rminute = ((minute + (second / 60)) * 6) * (Math.PI) / 180;
+		double rhours = ((hour + (minute / 60)) * 30) * (Math.PI) / 180;
+				
+		g.setColor(Color.RED);
+		g.drawLine(centerX, centerY, centerX + (int) (150 * Math.cos(rsecond - (Math.PI / 2))), centerY + (int) (150 * Math.sin(rsecond - (Math.PI / 2))));
+		g.setColor(Color.BLACK);
+		g.drawLine(centerX, centerY, centerX + (int) (120 * Math.cos(rminute - (Math.PI / 2))), centerY + (int) (120 * Math.sin(rminute - (Math.PI / 2))));
+		g.drawLine(centerX, centerY, centerX + (int) (90 * Math.cos(rhours - (Math.PI / 2))), centerY + (int) (90 * Math.sin(rhours - (Math.PI / 2))));
+		
+	}
+
+}

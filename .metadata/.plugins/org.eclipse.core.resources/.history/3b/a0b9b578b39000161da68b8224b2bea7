@@ -1,0 +1,32 @@
+package View;
+
+import java.awt.Font;
+
+import javax.swing.*;
+
+public class DigitalClockView extends JFrame {
+	
+	private Timer timer;
+	private JLabel hora;
+	private JLabel minuto;
+	
+	public DigitalClockView(String title) {
+		
+		setTitle(title);
+		setSize(450, 200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setVisible(true);
+		
+		hora.setBounds(685, 400, 50, 50);
+		hora.setFont(new Font("Arial", Font.PLAIN, 50));
+		minuto.setBounds(615,200, 175, 100);
+		minuto.setFont(new Font("Arial", Font.PLAIN, 50));
+		
+		timer = new Timer(1000, null);
+		
+	}
+	
+	
+
+}

@@ -1,0 +1,42 @@
+package View;
+
+import java.awt.Font;
+
+import javax.swing.*;
+
+public class DigitalClockView extends JFrame {
+	
+	private Timer timer;
+	private JLabel hora;
+	private JLabel minuto;
+	private JLabel doisPontos;
+	private JPanel panel;
+	
+	public DigitalClockView(String title) {
+		
+		setTitle(title);
+		setSize(450, 200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setVisible(true);
+		
+		hora = new JLabel();
+		minuto = new JLabel();
+		doisPontos = new JLabel();
+		panel = new JPanel();
+		getContentPane().add(panel);
+		
+		hora.setBounds(25, 25, 100, 150);
+		hora.setFont(new Font("Arial", Font.PLAIN, 50));
+		minuto.setBounds(230,25, 100, 150);
+		minuto.setFont(new Font("Arial", Font.PLAIN, 50));
+		doisPontos.setBounds(200,25, 25, 150);
+		doisPontos.setFont(new Font("Arial", Font.PLAIN, 50));
+		
+		timer = new Timer(1000, null);
+		
+	}
+	
+	
+
+}

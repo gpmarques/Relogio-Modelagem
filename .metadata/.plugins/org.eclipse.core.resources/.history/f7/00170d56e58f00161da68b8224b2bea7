@@ -1,0 +1,25 @@
+package View;
+
+import java.awt.Graphics2D;
+
+import javax.swing.Timer;
+
+public class AnalogueClockView extends Display {
+		
+	private Timer timer;
+	
+	public AnalogueClockView(String title, int size) {
+		super(title, size);
+		// TODO Auto-generated constructor stub	
+		timer = new Timer();
+	}
+	
+	public void paint(Graphics2D g) {
+		
+		
+	}
+	
+	
+	
+	
+}

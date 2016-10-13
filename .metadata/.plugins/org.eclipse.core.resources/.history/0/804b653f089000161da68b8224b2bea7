@@ -1,0 +1,41 @@
+package View;
+
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.*;
+
+public class AnalogueClockView extends Display {
+		
+	private Timer timer;
+	private AnalogueClockPanel panel;
+	
+	public AnalogueClockView(String title, int size) {
+		super(title, size);
+		// TODO Auto-generated constructor stub
+		
+		panel = new AnalogueClockPanel(size);
+		panel.setLayout(null);
+		
+		getContentPane().add(panel);
+		
+        ActionListener incrementingTime = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                System.out.println("Decimo de segundo");
+                repaint();
+            }
+        };
+        
+		timer = new Timer(100, incrementingTime);
+		startTimer();
+	}
+	
+	private void startTimer() {
+		timer.start();
+	}
+	
+	private void stopTimer() {
+		timer.stop();
+	}
+	
+}

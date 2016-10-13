@@ -1,0 +1,92 @@
+package View;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.*;
+
+public class DigitalClockView extends JFrame {
+	
+	private Timer timer;
+	private JLabel hourL;
+	private JLabel minuteL;
+	private JLabel colonL;
+	private JPanel panel;
+	private float second, minute, hour;
+	
+	public DigitalClockView(String title) {
+		
+		setTitle(title);
+		setSize(450, 200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setVisible(true);
+		
+		hourL = new JLabel();
+		minuteL = new JLabel();
+		colonL = new JLabel();
+		panel = new JPanel();
+		panel.setLayout(null);
+		getContentPane().add(panel);
+		
+		hourL.setBounds(25, 25, 100, 150);
+		hourL.setFont(new Font("Arial", Font.PLAIN, 50));
+		minuteL.setBounds(230,25, 100, 150);
+		minuteL.setFont(new Font("Arial", Font.PLAIN, 50));
+		colonL.setBounds(200,25, 25, 150);
+		colonL.setFont(new Font("Arial", Font.PLAIN, 50));
+		colonL.setText(":");
+		panel.add(hourL);
+		panel.add(minuteL);
+		panel.add(colonL);
+		
+        ActionListener incrementingTime = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                second += 1;
+                setTime(second);
+                setTimeLabels();
+                getContentPane().validate();
+				getContentPane().repaint();
+
+            }
+        };
+		
+		timer = new Timer(1000, incrementingTime);
+		startTimer();
+	}
+	
+	private void setTime(Float s) {
+		second = s;
+		minute = second/60;
+		hour = minute/60;
+	}
+	
+	private void setTimeLabels() {
+		formatTime(minute, minuteL);
+		formatTime(hour, hourL);
+		
+	}
+	
+	private void formatTime(float time, JLabel timeL) {
+		int timeI = (int)time;
+		String timeS = Integer.toString(timeI);
+		if(time == 0) {
+			timeL.setText(timeS+timeS);
+		} else if (time < 10) {
+			timeL.setText(0+timeS);
+		} else {
+			timeL.setText(timeS);
+		}
+	}
+	
+	private void startTimer() {
+		timer.start();
+	}
+	
+	private void stopTimer() {
+		timer.stop();
+	}
+	
+
+}

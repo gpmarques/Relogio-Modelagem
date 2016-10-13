@@ -1,0 +1,21 @@
+package View;
+
+import javax.swing.JFrame;
+import javax.swing.Timer;
+
+public class DigitalClockView extends JFrame {
+	
+	private Timer timer;
+	private JLabel hora;
+	private JLabel minuto;
+	public DigitalClockView() {
+		
+		
+		
+		timer = new Timer(1000, null);
+		
+	}
+	
+	
+
+}

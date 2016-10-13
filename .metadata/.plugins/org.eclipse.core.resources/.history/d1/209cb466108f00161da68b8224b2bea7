@@ -1,0 +1,13 @@
+package View;
+
+public class Display {
+	
+	private String title;
+	private int size;
+	
+	public Display(String title, int size) {
+		this.title = title;
+		this.size = size;
+	}
+
+}

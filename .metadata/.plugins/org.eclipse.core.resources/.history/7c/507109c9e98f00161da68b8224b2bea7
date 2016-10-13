@@ -1,0 +1,13 @@
+package Controller;
+
+public class ClockController {
+	
+	static private ClockController clockController;
+	
+	private ClockController() { clockController = ClockController(); }
+	
+	static public ClockController getControllerSingleton() {
+		return clockController;
+	}
+
+}
