@@ -1,0 +1,66 @@
+package Model;
+
+public class TimeManager {
+	
+	private int hour;
+	private int minute;
+	private int second;
+	public int tenthOfSecond;
+	
+	public TimeManager() {
+		
+		this.hour = 0;
+		this.minute = 0;
+		this.second = 0;
+		this.tenthOfSecond = 0;
+		
+	}
+	
+	/*
+	 * Methods to manage the time incrementing
+	 */
+	public void setSecond() {
+		if(tenthOfSecond%10 == 0 && tenthOfSecond >= 1) {
+			second += 1;
+		 	setMinute();
+		}
+	}
+	
+	private void setMinute() {
+		if(second%60 == 0 && second >= 1) {
+			minute += 1;
+			System.out.println(minute);
+			setHour();
+		}
+	}
+	
+	private void setHour() {
+		if(minute%60 == 0 && minute >= 1) {
+			hour += 1;
+		}
+	}
+	
+	public void incrementHour() {
+		hour += 1;
+	}
+	
+	public void incrementMinute() {
+		minute += 1;
+	}
+	
+	/*
+	 * Methods to get the time
+	 */
+	public int getHour() {
+		return hour;
+	}
+	
+	public int getMinute() {
+		return minute;
+	}
+	
+	public int getSecond() {
+		return second;
+	}
+
+}

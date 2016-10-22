@@ -1,0 +1,22 @@
+package Model;
+
+public class SetHourState extends ClockState {
+	
+	public String status() {
+		return "Ajusta hora";
+	}
+	
+	public ClockState aPressed(Timer time) {
+		return new SetMinuteState();
+	}
+	
+	public ClockState bPressed(TimeManager time) {
+		time.incrementHour();
+		return null;
+	}
+
+	public ClockState aReleased() {
+		return null;
+	}
+
+}

@@ -1,0 +1,25 @@
+package Model;
+
+import javax.swing.Timer;
+
+public class SetHourState extends ClockState implements Observable {
+	
+	public String status() {
+		return "Ajusta hora";
+	}
+	
+	public ClockState aPressed(Timer timer) {
+		timer.stop();
+		return new SetMinuteState();
+	}
+	
+	public ClockState bPressed(TimeManager time) {
+		time.incrementHour();
+		return null;
+	}
+
+	public ClockState aReleased() {
+		return null;
+	}
+
+}

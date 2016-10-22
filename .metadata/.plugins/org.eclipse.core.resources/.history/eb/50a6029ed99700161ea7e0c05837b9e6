@@ -1,0 +1,65 @@
+package View;
+
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+
+import javax.swing.*;
+
+public class ButtonView extends Observable {
+	
+	private JPanel panel;
+	private JButton buttonA;
+	private JButton buttonB;
+	private JFrame frame;
+	
+	public ButtonView(String title) {
+		
+		frame = new JFrame();
+		frame.setTitle(title);
+		frame.setSize(450, 200);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setVisible(true);
+		
+		panel = new JPanel();
+		panel.setLayout(null);
+		frame.getContentPane().add(panel);
+		
+		buttonA = new JButton();
+		buttonB = new JButton();
+		buttonA.setBounds(25, 15, 200, 150);
+		buttonA.setText("A");
+		buttonB.setBounds(230, 15, 200, 150);
+		buttonB.setText("B");
+		
+		panel.add(buttonA);
+		panel.add(buttonB);
+		
+		panel.revalidate();
+		panel.repaint();
+
+		buttonA.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("ButtonA pressed");
+				buttonA.setForeground(Color.RED);
+				
+			}
+		});
+		
+		buttonB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("ButtonB pressed");
+				buttonB.setForeground(Color.RED);
+				
+			}
+		});
+		
+	}
+	
+	public void setValue(Boolean b) {
+		
+	}
+
+}

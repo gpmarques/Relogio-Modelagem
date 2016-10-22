@@ -1,0 +1,17 @@
+package Model;
+
+public class SetHourState extends ClockState {
+	
+	public ClockState aPressed() {
+		return new SetMinuteState();
+	}
+	
+	public ClockState bPressed() {
+		return null;
+	}
+
+	public ClockState aReleased() {
+		return null;
+	}
+
+}

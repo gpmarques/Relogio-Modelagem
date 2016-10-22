@@ -7,20 +7,21 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class AnalogueClockPanel extends JPanel {
+public class AnalogueClockPanel extends JPanel implements Observer {
 	
 	private BufferedImage clockImage;
-	private float second;
-	private float minute;
-	private float hour;
+	private int second;
+	private int minute;
+	private int hour;
 	private int centerX;
 	private int centerY;
 	private int size;
-	private Calendar cal;
 	
 //	public AnalogueClockPanel(int size, float s) {
 //		this.size = size;
@@ -49,26 +50,18 @@ public class AnalogueClockPanel extends JPanel {
         
 	}
 	
-	public void setSeconds(float s) {
-		this.second = s;
-		this.minute = s/60;
-		this.hour = minute/60;
-		cal = Calendar.getInstance();
-		System.out.println(cal.get(Calendar.HOUR));
-		System.out.println(cal.get(Calendar.MINUTE));
-		System.out.println(cal.get(Calendar.SECOND));
+	public void setClockHands(int second, int minute, int hour) {
+		this.second = second;
+		this.minute = minute;
+		this.hour = hour;
 	}
-	
 	
 	private void drawHands(Graphics2D g) {
 		
 		double rsecond = (second*6)*(Math.PI)/180;
 		double rminute = ((minute) * 6) * (Math.PI) / 180;
 		double rhours = ((hour) * 30) * (Math.PI) / 180;
-		System.out.println(rsecond);
-		System.out.println(rminute);
-		System.out.println(rhours);
-				
+		
 		g.setColor(Color.RED);
 		g.drawLine(centerX, centerY, centerX + (int) (150 * Math.cos(rsecond - (Math.PI / 2))), centerY + (int) (150 * Math.sin(rsecond - (Math.PI / 2))));
 		g.setColor(Color.BLUE);
@@ -76,6 +69,17 @@ public class AnalogueClockPanel extends JPanel {
 		g.setColor(Color.BLACK);
 		g.drawLine(centerX, centerY, centerX + (int) (140 * Math.cos(rhours - (Math.PI / 2))), centerY + (int) (140 * Math.sin(rhours - (Math.PI / 2))));
 		
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		if(arg == null) {
+		} else {
+			int[] time = (int[]) arg;
+			setClockHands(time[0], time[1], time[2]);
+			this.repaint();
+		}
 	}
 
 }

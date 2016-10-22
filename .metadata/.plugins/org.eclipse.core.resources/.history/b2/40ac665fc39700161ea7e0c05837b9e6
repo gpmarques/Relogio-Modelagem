@@ -1,0 +1,87 @@
+package Model;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+
+import javax.swing.Timer;
+
+public class Clock extends Observable implements ActionListener {
+	
+	private ClockState state;
+	private Boolean a;
+	private Boolean b;
+	private TimeManager time;
+	private Timer timer;
+	
+	public Clock() {
+		state = ClockState.getInitialState();
+		a = false;
+		b = false;
+		time = new TimeManager();
+		
+//        ActionListener incrementingTime = new ActionListener() {
+//            public void actionPerformed(ActionEvent actionEvent) {
+//            	tenthOfSecond += 1;
+//            	setSecond();
+////            	System.out.println(tenthOfSecond);
+//            }
+//        };
+		
+//		timer = new Timer(100, incrementingTime);
+		timer = new Timer(100, this);
+		startTimer();
+	}
+	
+	/* 
+	 * State related methods
+	 */
+	public void aPressed() {
+		ClockState s = state.aPressed();
+		a = true;
+		if(s != null)
+			state = s;
+	}
+	
+	public void bPressed() {
+		ClockState s = state.bPressed();
+		if(a == false && s == new SetHourState() ) {
+			time.incrementHour();
+			return;
+		}
+		if(a == false && s == new SetMinuteState() ) {
+			time.incrementMinute();;
+			return;
+		}
+	}
+
+	public void aReleased() {
+		
+	}
+	
+	public void bReleased() {
+		
+	}
+	
+	/* 
+	 * Timer and time related methods
+	 */
+	private void startTimer() {
+		timer.start();
+	}
+	
+	private void stopTimer() {
+		timer.stop();
+	}
+
+	@Override
+  public void actionPerformed(ActionEvent actionEvent) {
+	time.tenthOfSecond += 1;
+	time.setSecond();
+	setChanged();
+	notifyObservers(tenthOfSecond);
+	//	System.out.println(tenthOfSecond);
+  }
+	
+	
+}

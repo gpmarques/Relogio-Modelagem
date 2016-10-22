@@ -1,0 +1,95 @@
+package Model;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+
+import javax.swing.Timer;
+
+public class Clock extends Observable implements ActionListener {
+	
+	private ClockState state;
+	private Boolean a;
+	private Boolean b;
+	private Timer timer;
+	public TimeManager time;
+	
+	public Clock() {
+		state = ClockState.getInitialState();
+		a = false;
+		b = false;
+		time = new TimeManager();
+
+		timer = new Timer(100, this);
+		startTimer();
+	}
+	
+	/* 
+	 * State related methods
+	 */
+	public void aPressed() {
+		ClockState s = state.aPressed();
+		a = true;
+		if(s != new ExhibitionState() ) 
+			state = s;
+	}
+	
+	public void bPressed() {
+		ClockState s = state.bPressed();
+		if(a == false && s == new SetHourState() ) {
+			time.incrementHour();
+			return;
+		}
+		if(a == false && s == new SetMinuteState() ) {
+			time.incrementMinute();
+			return;
+		}
+	}
+
+	public void aReleased() {
+		a = false;
+	}
+	
+	public void bReleased() {
+		b = false;
+		
+	}
+	
+	public Boolean a() {
+		return a;
+	}
+	
+	public Boolean b() {
+		return b;
+	}
+	
+	
+	/* 
+	 * Timer and time related methods
+	 */
+	private void startTimer() {
+		timer.start();
+	}
+	
+	private void stopTimer() {
+		timer.stop();
+	}
+
+	@Override
+  public void actionPerformed(ActionEvent actionEvent) {
+	if(timer.isRunning()) {
+		this.time.tenthOfSecond += 1;
+		this.time.setSecond();
+		int[] time = {this.time.getSecond(),
+				      this.time.getMinute(), 
+		              this.time.getHour() };
+		setChanged();
+		notifyObservers(time);
+	} else {
+		
+	}
+
+  }
+	
+	
+}

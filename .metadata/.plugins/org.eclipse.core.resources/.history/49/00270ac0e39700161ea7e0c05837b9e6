@@ -1,0 +1,82 @@
+package View;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.*;
+
+public class DigitalClockView extends JFrame implements Observer {
+	
+	private JLabel hourL;
+	private JLabel minuteL;
+	private JLabel colonL;
+	private JPanel panel;
+	
+	public DigitalClockView(String title) {
+		
+		setTitle(title);
+		setSize(350, 200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setVisible(true);
+		
+		hourL = new JLabel();
+		minuteL = new JLabel();
+		colonL = new JLabel();
+		panel = new JPanel();
+		panel.setLayout(null);
+		getContentPane().add(panel);
+		
+		hourL.setBounds(25, 25, 100, 150);
+		hourL.setFont(new Font("Arial", Font.PLAIN, 75));
+		hourL.setText("00");
+		minuteL.setBounds(155,25, 100, 150);
+		minuteL.setFont(new Font("Arial", Font.PLAIN, 75));
+		minuteL.setText("00");
+		colonL.setBounds(125,25, 25, 150);
+		colonL.setFont(new Font("Arial", Font.PLAIN, 75));
+		colonL.setText(":");
+		panel.add(hourL);
+		panel.add(minuteL);
+		panel.add(colonL);
+		
+		getContentPane().validate();
+		getContentPane().repaint();
+
+	}
+	
+	/* 
+	 * Present and format time related methods
+	 */
+	public void setTimeLabels(int hour, int minute) {
+		formatTime(minute, minuteL);
+		formatTime(hour, hourL);
+		getContentPane().validate();
+		getContentPane().repaint();
+		
+	}
+	
+	private void formatTime(float time, JLabel timeL) {
+		int timeI = (int)time;
+		String timeS = Integer.toString(timeI);
+		if(time == 0) {
+			timeL.setText(timeS+timeS);
+		} else if (time < 10) {
+			timeL.setText(0+timeS);
+		} else {
+			timeL.setText(timeS);
+		}
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		int[] time = (int[]) arg;
+		setTimeLabels(time[1], time[2]);
+		
+	}
+
+}

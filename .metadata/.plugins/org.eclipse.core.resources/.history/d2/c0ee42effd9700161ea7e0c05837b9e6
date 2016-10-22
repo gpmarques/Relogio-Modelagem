@@ -1,0 +1,112 @@
+package Model;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+
+import javax.swing.Timer;
+
+public class Clock extends Observable implements ActionListener {
+	
+	private ClockState state;
+	private Boolean a;
+	private Boolean b;
+	private Timer timer;
+	public TimeManager time;
+	
+	public Clock() {
+		state = ClockState.getInitialState();
+		a = false;
+		b = false;
+		time = new TimeManager();
+
+		timer = new Timer(100, this);
+		startTimer();
+	}
+	
+	/* 
+	 * State related methods
+	 */
+	public void aPressed() {
+
+		if(b == false) {
+			ClockState s = state.aPressed(timer);
+			state = s;
+			a = true;
+//			setChanged();
+//			notifyObservers();
+		}
+	}
+	
+	public void bPressed() {
+		
+		if(a == false) {
+			b = true;
+			state.bPressed(time);
+//			int[] timeArray = {this.time.getSecond(),
+//							   this.time.getMinute(), 
+//							   this.time.getHour() };
+//			setChanged();
+//			notifyObservers(timeArray);
+		}
+		
+	}
+
+	public void aReleased() {
+		
+		if(b == false) {
+			a = false;
+			int[] timeArray = {this.time.getSecond(),
+				   this.time.getMinute(), 
+				   this.time.getHour() };
+			setChanged();
+			notifyObservers(timeArray);
+		}
+	}
+	
+	public void bReleased() {
+		
+		if(a == false) {
+			b = false;
+			setChanged();
+			notifyObservers();
+		}
+		
+		
+	}
+	
+	public Boolean a() {
+		return a;
+	}
+	
+	public Boolean b() {
+		return b;
+	}
+	
+	
+	/* 
+	 * Timer and time related methods
+	 */
+	private void startTimer() {
+		timer.start();
+	}
+	
+	private void stopTimer() {
+		timer.stop();
+	}
+	
+
+  @Override
+  public void actionPerformed(ActionEvent actionEvent) {
+	this.time.tenthOfSecond += 1;
+	this.time.setSecond();
+	int[] timeArray = {this.time.getSecond(),
+	      	  		   this.time.getMinute(), 
+	      	  		   this.time.getHour() };
+	setChanged();
+	notifyObservers(timeArray);
+
+  }
+	
+	
+}

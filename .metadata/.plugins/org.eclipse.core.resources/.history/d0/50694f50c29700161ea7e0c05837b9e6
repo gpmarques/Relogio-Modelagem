@@ -1,0 +1,33 @@
+package Model;
+
+public class TimeManager {
+	
+	private int hour;
+	private int minute;
+	private int second;
+	private int tenthOfSecond;
+	
+	
+	// set time
+	public void setSecond() {
+		if(tenthOfSecond%10 == 0 && tenthOfSecond >= 1) {
+			second += 1;
+		 	setMinute();
+		}
+	}
+	
+	private void setMinute() {
+		if(second%60 == 0 && second >= 1) {
+			minute += 1;
+			System.out.println(minute);
+			setHour();
+		}
+	}
+	
+	private void setHour() {
+		if(minute%60 == 0 && minute >= 1) {
+			hour += 1;
+		}
+	}
+
+}

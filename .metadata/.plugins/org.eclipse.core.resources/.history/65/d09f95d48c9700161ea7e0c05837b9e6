@@ -1,0 +1,31 @@
+package View;
+
+import javax.swing.*;
+
+public class ButtonView extends JFrame {
+	
+	private JPanel panel;
+	private JButton buttonA;
+	private JButton buttonB;
+	
+	public ButtonView(String title) {
+		
+		setTitle(title);
+		setSize(450, 200);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setVisible(true);
+		
+		panel = new JPanel();
+		buttonA = new JButton();
+		buttonB = new JButton();
+		
+		buttonA.setBounds(25, 25, 200, 150);
+		buttonA.setText("A");
+		buttonB.setBounds(230, 25, 200, 150);
+		buttonB.setText("B");
+		
+		
+	}
+
+}

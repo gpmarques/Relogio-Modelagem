@@ -1,0 +1,51 @@
+package Model;
+
+import javax.swing.Timer;
+
+public class Clock {
+	
+	private ClockState state;
+	private Boolean a;
+	private Boolean b;
+	private int hour;
+	private int minute;
+	private Timer timer;
+	
+	public Clock() {
+		state = ClockState.getInitialState();
+		hour = 0;
+		minute = 0;
+		a = false;
+		b = false;
+		timer = new Timer();
+	}
+	
+	public void aPressed() {
+		ClockState s = state.aPressed();
+		a = true;
+		if(s != null)
+			state = s;
+	}
+	
+	public void bPressed() {
+		ClockState s = state.bPressed();
+		if(a == false && s == new SetHourState() ) {
+			hour += 1;
+			return;
+		}
+		if(a == false && s == new SetMinuteState() ) {
+			hour += 1;
+			return;
+		}
+	}
+
+	public void aReleased() {
+		
+	}
+	
+	public void bReleased() {
+		
+	}	
+	
+	
+}

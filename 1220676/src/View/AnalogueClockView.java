@@ -7,9 +7,7 @@ import javax.swing.*;
 
 public class AnalogueClockView extends JFrame {
 		
-	private Timer timer;
 	private AnalogueClockPanel panel;
-	private float second;
 	
 	public AnalogueClockView(String title) {
 		super();
@@ -21,32 +19,20 @@ public class AnalogueClockView extends JFrame {
 		setResizable(false);
 		setVisible(true);
 		
-		this.second = 0;
 		panel = new AnalogueClockPanel();
-		panel.setSeconds(second);
 		panel.setLayout(null);
 		getContentPane().add(panel);
-		
-        ActionListener incrementingTime = new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                second += 1;
-                panel.setSeconds(second);
-                getContentPane().validate();
-                getContentPane().repaint();
-            }
-        };
-        
-		timer = new Timer(1000, incrementingTime);
-		startTimer();
 
 	}
 	
-	private void startTimer() {
-		timer.start();
+	public void callPanel(int second, int minute, int hour) {
+		panel.setClockHands(second, minute, hour);
+		getContentPane().revalidate();
+		getContentPane().repaint();
 	}
 	
-	private void stopTimer() {
-		timer.stop();
+	public AnalogueClockPanel getPanel() {
+		return panel;
 	}
 	
 }

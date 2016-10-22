@@ -1,0 +1,128 @@
+package Model;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+
+import javax.swing.Timer;
+
+public class Clock extends Observable implements ActionListener {
+	
+	private ClockState state;
+	private Boolean a;
+	private Boolean b;
+	private int hour;
+	private int minute;
+	private int second;
+	private int tenthOfSecond;
+	private TimeManager time;
+	private Timer timer;
+	
+	public Clock() {
+		state = ClockState.getInitialState();
+		hour = 0;
+		minute = 0;
+		second = 0;
+		tenthOfSecond = 0;
+		a = false;
+		b = false;
+		time = new TimeManager();
+		
+//        ActionListener incrementingTime = new ActionListener() {
+//            public void actionPerformed(ActionEvent actionEvent) {
+//            	tenthOfSecond += 1;
+//            	setSecond();
+////            	System.out.println(tenthOfSecond);
+//            }
+//        };
+		
+//		timer = new Timer(100, incrementingTime);
+		timer = new Timer(100, this);
+		startTimer();
+	}
+	
+	/* 
+	 * State related methods
+	 */
+	public void aPressed() {
+		ClockState s = state.aPressed();
+		a = true;
+		if(s != null)
+			state = s;
+	}
+	
+	public void bPressed() {
+		ClockState s = state.bPressed();
+		if(a == false && s == new SetHourState() ) {
+			hour += 1;
+			return;
+		}
+		if(a == false && s == new SetMinuteState() ) {
+			hour += 1;
+			return;
+		}
+	}
+
+	public void aReleased() {
+		
+	}
+	
+	public void bReleased() {
+		
+	}
+	
+	/* 
+	 * Timer and time related methods
+	 */
+	private void startTimer() {
+		timer.start();
+	}
+	
+	private void stopTimer() {
+		timer.stop();
+	}
+	// set time
+	private void setSecond() {
+		if(tenthOfSecond%10 == 0 && tenthOfSecond >= 1) {
+			second += 1;
+		 	setMinute();
+		}
+	}
+	
+	private void setMinute() {
+		if(second%60 == 0 && second >= 1) {
+			minute += 1;
+			System.out.println(minute);
+			setHour();
+		}
+	}
+	
+	private void setHour() {
+		if(minute%60 == 0 && minute >= 1) {
+			hour += 1;
+		}
+	}
+	
+	public int getHour() {
+		return hour;
+	}
+	
+	public int getMinute() {
+		return minute;
+	}
+	
+	public int getSecond() {
+		return second;
+	}
+
+	@Override
+  public void actionPerformed(ActionEvent actionEvent) {
+	tenthOfSecond += 1;
+	setSecond();
+	setChanged();
+	notifyObservers(tenthOfSecond);
+	//	System.out.println(tenthOfSecond);
+  }
+	
+	
+}

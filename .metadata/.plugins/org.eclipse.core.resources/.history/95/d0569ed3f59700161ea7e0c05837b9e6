@@ -1,0 +1,22 @@
+package Model;
+
+public class ExhibitionState extends ClockState {
+	
+	public String status() {
+		return "Exibição";
+	}
+	
+	public ClockState aPressed() {
+		return new SetHourState();
+	}
+	
+	public ClockState bPressed(TimeManager time) {
+		return null;
+	}
+
+	public ClockState aReleased() {
+		return null;
+	}	
+	
+
+}

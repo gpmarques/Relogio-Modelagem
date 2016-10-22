@@ -1,0 +1,18 @@
+package Model;
+
+public abstract class ClockState {
+	
+	public static ClockState getInitialState() {
+		return new ExhibitionState();
+	}
+	
+	public abstract void aPressed();
+	
+	public abstract void bPressed();
+
+	public abstract void aReleased();
+	
+	public abstract void bReleased();	
+
+
+}

@@ -1,0 +1,37 @@
+package Model;
+
+public class Clock {
+	
+	private ClockState state;
+	private Boolean a;
+	private Boolean b;
+	private int hour;
+	private int minute;
+	
+	public Clock() {
+		state = ClockState.getInitialState();
+		hour = 0;
+		minute = 0;
+		a = false;
+		b = false;
+	}
+	
+	public void aPressed() {
+		ClockState s = state.aPressed();
+		
+	}
+	
+	public void bPressed() {
+		
+	}
+
+	public void aReleased() {
+		
+	}
+	
+	public void bReleased() {
+		
+	}	
+	
+	
+}

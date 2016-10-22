@@ -1,0 +1,21 @@
+package Model;
+
+public class SetMinuteState extends ClockState {
+	
+	public String status() {
+		return "Ajusta Minuto";
+	}
+	
+	public ClockState aPressed() {
+		return new ExhibitionState();
+	}
+	
+	public ClockState bPressed(TimeManager time) {
+		return null;
+	}
+
+	public ClockState aReleased() {
+		return null;
+	}
+
+}

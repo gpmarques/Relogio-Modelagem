@@ -1,0 +1,96 @@
+package Model;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
+public class Clock {
+	
+	private ClockState state;
+	private Boolean a;
+	private Boolean b;
+	private int hour;
+	private int minute;
+	private int second;
+	private int tenthOfSecond;
+	private Timer timer;
+	
+	public Clock() {
+		state = ClockState.getInitialState();
+		hour = 0;
+		minute = 0;
+		a = false;
+		b = false;
+		
+        ActionListener incrementingTime = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+            	tenthOfSecond += 1;
+            }
+        };
+		
+		timer = new Timer(100, incrementingTime);
+		this.startTimer();
+	}
+	
+	/* 
+	 * State related methods
+	 */
+	public void aPressed() {
+		ClockState s = state.aPressed();
+		a = true;
+		if(s != null)
+			state = s;
+	}
+	
+	public void bPressed() {
+		ClockState s = state.bPressed();
+		if(a == false && s == new SetHourState() ) {
+			hour += 1;
+			return;
+		}
+		if(a == false && s == new SetMinuteState() ) {
+			hour += 1;
+			return;
+		}
+	}
+
+	public void aReleased() {
+		
+	}
+	
+	public void bReleased() {
+		
+	}
+	
+	/* 
+	 * Timer and time related methods
+	 */
+	private void startTimer() {
+		timer.start();
+	}
+	
+	private void stopTimer() {
+		timer.stop();
+	}
+	
+	private void setTime(int ts) {
+		second = s;
+		minute = (int) (second/60);
+		hour = minute/60;
+	}
+	
+	public int getHour() {
+		return hour;
+	}
+	
+	public int getMinute() {
+		return minute;
+	}
+	
+	public float getSecond() {
+		return second;
+	}
+	
+	
+}

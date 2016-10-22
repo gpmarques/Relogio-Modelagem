@@ -1,24 +1,25 @@
 package View;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.*;
 
-public class DigitalClockView extends JFrame {
+public class DigitalClockView extends JFrame implements Observer {
 	
-	private Timer timer;
 	private JLabel hourL;
 	private JLabel minuteL;
 	private JLabel colonL;
 	private JPanel panel;
-	private float second, minute, hour;
 	
 	public DigitalClockView(String title) {
 		
 		setTitle(title);
-		setSize(450, 200);
+		setSize(350, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
@@ -32,8 +33,12 @@ public class DigitalClockView extends JFrame {
 		
 		hourL.setBounds(25, 25, 100, 150);
 		hourL.setFont(new Font("Arial", Font.PLAIN, 75));
+		hourL.setText("00");
+		hourL.setForeground(Color.BLACK);
 		minuteL.setBounds(155,25, 100, 150);
 		minuteL.setFont(new Font("Arial", Font.PLAIN, 75));
+		minuteL.setText("00");
+		minuteL.setForeground(Color.BLACK);
 		colonL.setBounds(125,25, 25, 150);
 		colonL.setFont(new Font("Arial", Font.PLAIN, 75));
 		colonL.setText(":");
@@ -41,30 +46,19 @@ public class DigitalClockView extends JFrame {
 		panel.add(minuteL);
 		panel.add(colonL);
 		
-        ActionListener incrementingTime = new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                second += 1;
-                setTime(second);
-                setTimeLabels();
-                getContentPane().validate();
-				getContentPane().repaint();
+		getContentPane().validate();
+		getContentPane().repaint();
 
-            }
-        };
-		
-		timer = new Timer(1000, incrementingTime);
-		startTimer();
 	}
 	
-	private void setTime(Float s) {
-		second = s;
-		minute = second/60;
-		hour = minute/60;
-	}
-	
-	private void setTimeLabels() {
+	/* 
+	 * Present and format time related methods
+	 */
+	public void setTimeLabels(int hour, int minute) {
 		formatTime(minute, minuteL);
 		formatTime(hour, hourL);
+		getContentPane().validate();
+		getContentPane().repaint();
 		
 	}
 	
@@ -80,13 +74,30 @@ public class DigitalClockView extends JFrame {
 		}
 	}
 	
-	private void startTimer() {
-		timer.start();
+	public void setRed() {
+		if(hourL.getForeground() == Color.BLACK && minuteL.getForeground() == Color.RED) {
+			minuteL.setForeground(Color.BLACK);
+		} else if(hourL.getForeground() == Color.RED) {
+			hourL.setForeground(Color.BLACK);
+			minuteL.setForeground(Color.RED);
+		} else {
+			hourL.setForeground(Color.RED);
+		}
+		getContentPane().validate();
+		getContentPane().repaint();
 	}
-	
-	private void stopTimer() {
-		timer.stop();
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		if(arg == null) {
+			setRed();
+		} else {
+			int[] time = (int[]) arg;
+			setTimeLabels(time[2], time[1]);
+		}
+
+		
 	}
-	
 
 }

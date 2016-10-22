@@ -1,0 +1,48 @@
+package Controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
+import Model.Clock;
+import View.*;
+
+public class ClockController {
+	
+	private Timer timer;
+	private AnalogueClockView analogueClock;
+	private DigitalClockView digitalClock;
+	private ButtonView buttons;
+	private Clock clock;
+	
+	public ClockController() { 
+		
+		analogueClock = new AnalogueClockView("Relogio Analogico");
+		digitalClock = new DigitalClockView("Relogio Digital");
+		buttons = new ButtonView("Comandos");
+        ActionListener setTime = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                digitalClock.setTimeLabels(clock.getHour(),
+                						   clock.getMinute());
+                analogueClock.callPanel(clock.getSecond(), 
+                		 			    clock.getMinute(), 
+                		 			    clock.getHour() );
+                System.out.println("GUI Set");
+            }
+        };
+		timer = new Timer(1000, setTime);
+		startTimer();
+		clock = new Clock();
+	}
+	
+	private void startTimer() {
+		timer.start();
+	}
+	
+	private void stopTimer() {
+		timer.stop();
+	}
+	
+
+}

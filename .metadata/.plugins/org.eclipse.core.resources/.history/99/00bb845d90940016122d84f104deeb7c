@@ -1,0 +1,22 @@
+package Model;
+
+public class ExhibitionState extends ClockState {
+	
+	public ClockState aPressed() {
+		return new SetHourState();
+	}
+	
+	public int bPressed() {
+		return -1;
+	}
+
+	public ClockState aReleased() {
+		return null;
+	}
+	
+	public ClockState bReleased() {
+		return null;
+	}	
+	
+
+}

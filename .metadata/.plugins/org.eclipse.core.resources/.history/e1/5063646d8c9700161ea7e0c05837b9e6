@@ -1,0 +1,16 @@
+package View;
+
+import javax.swing.*;
+
+public class ButtonView extends JFrame {
+	
+	private JPanel panel;
+	private JButton buttonA;
+	private JButton buttonB;
+	
+	public ButtonView() {
+		
+		panel = new JPanel();
+	}
+
+}

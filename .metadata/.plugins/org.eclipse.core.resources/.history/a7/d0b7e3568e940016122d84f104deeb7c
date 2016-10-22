@@ -1,0 +1,11 @@
+package Model;
+
+public abstract class ClockState {
+	
+	public static ClockState getInitialState() {
+		return new ExhibitionState();
+	}
+	
+	
+
+}

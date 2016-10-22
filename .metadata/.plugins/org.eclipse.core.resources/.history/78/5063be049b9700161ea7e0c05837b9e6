@@ -1,0 +1,113 @@
+package Model;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.Timer;
+
+public class Clock {
+	
+	private ClockState state;
+	private Boolean a;
+	private Boolean b;
+	private int hour;
+	private int minute;
+	private int second;
+	private int tenthOfSecond;
+	private Timer timer;
+	
+	public Clock() {
+		state = ClockState.getInitialState();
+		hour = 0;
+		minute = 0;
+		second = 0;
+		tenthOfSecond = 0;
+		a = false;
+		b = false;
+		
+        ActionListener incrementingTime = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+            	tenthOfSecond += 1;
+            	setTime();
+//            	System.out.println(tenthOfSecond);
+            }
+        };
+		
+		timer = new Timer(100, incrementingTime);
+		startTimer();
+	}
+	
+	/* 
+	 * State related methods
+	 */
+	public void aPressed() {
+		ClockState s = state.aPressed();
+		a = true;
+		if(s != null)
+			state = s;
+	}
+	
+	public void bPressed() {
+		ClockState s = state.bPressed();
+		if(a == false && s == new SetHourState() ) {
+			hour += 1;
+			return;
+		}
+		if(a == false && s == new SetMinuteState() ) {
+			hour += 1;
+			return;
+		}
+	}
+
+	public void aReleased() {
+		
+	}
+	
+	public void bReleased() {
+		
+	}
+	
+	/* 
+	 * Timer and time related methods
+	 */
+	private void startTimer() {
+		timer.start();
+	}
+	
+	private void stopTimer() {
+		timer.stop();
+	}
+	
+	private void setSecond() {
+		if(tenthOfSecond%10 == 0 && tenthOfSecond >= 1) {
+			second += 1;
+		 	setMinute();
+		}
+//			System.out.println(second);
+
+		if(minute%60 == 0 && minute >= 1)
+			hour += 1;
+//			System.out.println(hour);
+	}
+	
+	private void setMinute() {
+		if(second%60 == 0 && second >= 1) {
+			minute += 1;
+			System.out.println(minute);
+		}
+	}
+	
+	public int getHour() {
+		return hour;
+	}
+	
+	public int getMinute() {
+		return minute;
+	}
+	
+	public int getSecond() {
+		return second;
+	}
+	
+	
+}

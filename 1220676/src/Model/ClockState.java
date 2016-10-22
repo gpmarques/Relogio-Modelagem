@@ -1,5 +1,20 @@
 package Model;
 
+import javax.swing.Timer;
+
 public abstract class ClockState {
+	
+	public static ClockState getInitialState() {
+		return new ExhibitionState();
+	}
+	public abstract String status();
+	public abstract ClockState aPressed(Timer timer);
+	public abstract ClockState bPressed(TimeManager time);
+	public abstract ClockState aReleased();
+	
+	public ClockState bReleased() {
+		return null;
+	}
+
 
 }

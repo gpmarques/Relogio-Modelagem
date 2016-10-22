@@ -1,0 +1,76 @@
+package Controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.Timer;
+
+import Model.Clock;
+import View.*;
+
+public class ClockController implements Observer {
+	
+	private Timer timer;
+	private AnalogueClockView analogueClock;
+	private DigitalClockView digitalClock;
+	private ButtonView buttons;
+	private Clock clock;
+	
+	public ClockController() { 
+		
+		analogueClock = new AnalogueClockView("Relogio Analogico");
+		digitalClock = new DigitalClockView("Relogio Digital");
+		buttons = new ButtonView("Comandos");
+        ActionListener setTime = new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {
+                
+            	digitalClock.setTimeLabels(clock.time.getHour(),
+                						   clock.time.getMinute());
+                
+                analogueClock.callPanel(clock.time.getSecond(), 
+                		 			    clock.time.getMinute(), 
+                		 			    clock.time.getHour());
+                
+            }
+        };
+		timer = new Timer(1000, setTime);
+		startTimer();
+		clock = new Clock();
+		clock.addObserver(analogueClock.getPanel());
+		clock.addObserver(digitalClock);
+//		buttons.addObserver(this);
+
+		
+	}
+	
+	private void startTimer() {
+		timer.start();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		if(arg == "a") {
+			if(clock.a()) {
+				clock.aReleased();
+			} else {
+				clock.aPressed();
+			}
+			return;
+		}
+		
+		if(arg == "b") {
+			if(clock.b()) {
+				clock.bReleased();
+			} else {
+				clock.bPressed();
+			}
+			return;
+		}
+		
+	}
+	
+
+}
